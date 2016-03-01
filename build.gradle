@@ -1,0 +1,106 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android.maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "1.0.0" //提交到maven中的版本号
+
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+}
+
+def siteUrl = 'https://github.com/ZacharyTech/Android-Support-ExPercent'
+def gitUrl = 'https://github.com/ZacharyTech/Android-Support-ExPercent.git'
+group = "cc.zachary.android"
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'Android Support ExPercent'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'zacharytech'
+                        name 'zacharytech'
+                        email 'zachary-li@foxmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task resources(type: Jar) {
+    from android.sourceSets.main.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSers.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task(type: Jar,dependsOn: Javadoc){
+    classifier='javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts{
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties mProperties = new Properties();
+mProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray{
+    user=mProperties.getProperty("bintray.user")
+    key=mProperties.getProperty("bintray.apikey")
+    configurations['archives']
+    pkg{
+        repo="maven"
+        name="Android Support ExPercent"
+        websiteUrl = siteUrl
+        vcsUrl=gitUrl
+        lincenses=["Apcah-2.0"]
+        publish = true
+    }
+}
