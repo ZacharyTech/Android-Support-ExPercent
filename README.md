@@ -5,7 +5,10 @@
 ![](http://i.imgur.com/ZgphQUH.png)
 
 ### User
-		
+	compile 'cc.zachary:android-support-expercent:1.0.0'
+
+### Example
+
 	<android.support.percent.PercentLinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
