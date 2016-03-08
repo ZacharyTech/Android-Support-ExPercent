@@ -25,48 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Helper for layouts that want to support percentage based dimensions.
- *
- * <p>This class collects utility methods that are involved in extracting percentage based dimension
- * attributes and applying them to ViewGroup's children. If you would like to implement a layout
- * that supports percentage based dimensions, you need to take several steps:
- *
- * <ol>
- * <li> You need a {@link ViewGroup.LayoutParams} subclass in your ViewGroup that implements
- * {@link android.support.percent.PercentLayoutHelper.PercentLayoutParams}.
- * <li> In your {@code LayoutParams(Context c, AttributeSet attrs)} constructor create an instance
- * of {@link PercentLayoutInfo} by calling
- * {@link PercentLayoutHelper#getPercentLayoutInfo(Context, AttributeSet)}. Return this
- * object from {@code public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo()}
- * method that you implemented for {@link android.support.percent.PercentLayoutHelper.PercentLayoutParams} interface.
- * <li> Override
- * {@link ViewGroup.LayoutParams#setBaseAttributes(TypedArray, int, int)}
- * with a single line implementation {@code PercentLayoutHelper.fetchWidthAndHeight(this, a,
- * widthAttr, heightAttr);}
- * <li> In your ViewGroup override {@link ViewGroup#generateLayoutParams(AttributeSet)} to return
- * your LayoutParams.
- * <li> In your {@link ViewGroup#onMeasure(int, int)} override, you need to implement following
- * pattern:
- * <pre class="prettyprint">
- * protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
- *     mHelper.adjustChildren(widthMeasureSpec, heightMeasureSpec);
- *     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
- *     if (mHelper.handleMeasuredStateTooSmall()) {
- *         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
- *     }
- * }
- * </pre>
- * <li>In your {@link ViewGroup#onLayout(boolean, int, int, int, int)} override, you need to
- * implement following pattern:
- * <pre class="prettyprint">
- * protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
- *     super.onLayout(changed, left, top, right, bottom);
- *     mHelper.restoreOriginalParams();
- * }
- * </pre>
- * </ol>
- */
+
 public class PercentLayoutHelper {
     private static final String TAG = "PercentLayout";
 
