@@ -16,14 +16,14 @@
         app:layout_heightPercent="20%">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#ff0066"
             android:gravity="center"
             app:layout_widthPercent="40%" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#339966"
             android:gravity="center"
